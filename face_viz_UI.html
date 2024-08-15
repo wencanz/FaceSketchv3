@@ -206,10 +206,7 @@ function runImgSequence(imgFaceDuration) {
     // newImgFace.onload = function() {
 		// 	ctx.drawImage(newImgFace, 0, 0, canvas.width, canvas.height);
 		// };
-		// console.log('imgFace.src:', imgFace.src);
-		if (typeof imgFace?.src === 'undefined') {
-			imgFace.src = imgFaceUrl;
-    }
+		console.log('imgFace.src:', imgFace.src);
 		ctx.drawImage(imgFace, 0, 0, canvas.width, canvas.height);	
 	}
 	//drawImgFace();
@@ -222,13 +219,12 @@ function runImgSequence(imgFaceDuration) {
 	// }
 	
 	// draw first and cache	
-	imgFace.onload = function() {
-		drawImgFocus(canvasBuffers[0]);
-		drawImgDistractor(canvasBuffers[1]);
-		drawImgFace(canvasBuffers[2]);
-		// drawImgFaceGrey(canvasBuffers[2]);
-		drawImgDistractor(canvasBuffers[3]);
-	};
+	drawImgFocus(canvasBuffers[0]);
+	drawImgDistractor(canvasBuffers[1]);
+	drawImgFace(canvasBuffers[2]);
+	// drawImgFaceGrey(canvasBuffers[2]);
+	drawImgDistractor(canvasBuffers[3]);
+	
 
 	const durationFrames = [
 		(1 * fps).toFixed(0), // 1.0s,
