@@ -199,16 +199,18 @@ function runImgSequence(imgFaceDuration) {
 	function drawImgFace(canvas) {
 		const ctx = canvas.getContext('2d');
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(imgFace, 0, 0, canvas.width, canvas.height);
+    imgFace.onload() = function() {
+			ctx.drawImage(imgFace, 0, 0, canvas.width, canvas.height);
+		};
 	}
 	//drawImgFace();
 
-	function drawImgFaceGrey(canvas) {
-		const ctx = canvas.getContext('2d');
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.filter = "grayscale()";
-    ctx.drawImage(imgFace, 0, 0, canvas.width, canvas.height);
-	}
+	// function drawImgFaceGrey(canvas) {
+	// 	const ctx = canvas.getContext('2d');
+	// 	ctx.clearRect(0, 0, canvas.width, canvas.height);
+  //   ctx.filter = "grayscale()";
+  //   ctx.drawImage(imgFace, 0, 0, canvas.width, canvas.height);
+	// }
 	
 	// draw first and cache	
 	drawImgFocus(canvasBuffers[0]);
