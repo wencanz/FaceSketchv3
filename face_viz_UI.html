@@ -98,8 +98,7 @@ function getQueryParam(name) {
 // let faceFile = getQueryParam('variable').split('/');
 var explanation = getQueryParam('explanation');
 var instance = getQueryParam('instance');
-console.log('explanation', explanation);
-console.log('instance', instance);
+
 // if (explanation === null) {
 //     console.log('The explanation is null.');
 // }
@@ -117,6 +116,9 @@ var imgFaceUrl = 'https://raw.githubusercontent.com/wencanz/FaceSketchv3/main/' 
 // let imgFaceUrl = 'https://img.freepik.com/premium-vector/one-line-drawing-asian-grumpy-face-view-emotion-people-man-art-drawing-line_255544-1971.jpg?w=500';
 // let imgFaceUrl = 'https://raw.githubusercontent.com//wencanz/FaceSketch/main/photo/F001_T1_2561_face.jpg';
 imgFace.src = imgFaceUrl;
+console.log('explanation', explanation);
+console.log('instance', instance);
+console.log('imgFaceUrl', imgFaceUrl);
 
 // const questionEmotion = document.getElementById('questionEmotion');
 const txtDuration = document.getElementById('txtDuration');    
