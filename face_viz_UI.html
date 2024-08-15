@@ -112,186 +112,186 @@ document.addEventListener('DOMContentLoaded', function() {
 	console.log('explanation', explanation);
 	console.log('instance', instance);
 	console.log('imgFaceUrl', imgFaceUrl);
-});
 
-// const questionEmotion = document.getElementById('questionEmotion');
-const txtDuration = document.getElementById('txtDuration');    
-const txtFrames = document.getElementById('txtFrames');
-// const txtFps = document.getElementById('txtFps');   
+	// const questionEmotion = document.getElementById('questionEmotion');
+	const txtDuration = document.getElementById('txtDuration');    
+	const txtFrames = document.getElementById('txtFrames');
+	// const txtFps = document.getElementById('txtFps');   
 
-// // get FPS of browser
-// const FpsEmitter = window.FpsEmitter;
-// const fpsEmitter = new FpsEmitter();
-// let fps = fpsEmitter.get();
+	// // get FPS of browser
+	// const FpsEmitter = window.FpsEmitter;
+	// const fpsEmitter = new FpsEmitter();
+	// let fps = fpsEmitter.get();
 
-// fpsEmitter.on('update', function(newFps) {
-// 	fps = newFps;
-//   txtFps.value = fps;
-// });
+	// fpsEmitter.on('update', function(newFps) {
+	// 	fps = newFps;
+	//   txtFps.value = fps;
+	// });
 
-// TODO: make size in terms of inches
-function runImgSequence(imgFaceDuration) {
-  const len = 400
-	const crossLen = 50
+	// TODO: make size in terms of inches
+	function runImgSequence(imgFaceDuration) {
+	  const len = 400
+		const crossLen = 50
 
-  if (typeof(imgFaceDuration) == 'undefined') {
-		//imgFaceDuration = 2 * ( 1 + Math.floor(15 * Math.random()) ) * 1000/60; // random duration between 33.33ms and 500ms
-		imgFaceDuration = durationQualtrics;
-  }
+	  if (typeof(imgFaceDuration) == 'undefined') {
+			//imgFaceDuration = 2 * ( 1 + Math.floor(15 * Math.random()) ) * 1000/60; // random duration between 33.33ms and 500ms
+			imgFaceDuration = durationQualtrics;
+	  }
 
-	//console.log('durationQualtrics', durationQualtrics);
-	//console.log('imgFaceDuration', imgFaceDuration);
-	//console.log('fps:', fps);
-	//console.log("explanation:", explanation);
-	//console.log("instance:", instance);
-	imgFaceDurationFrames = imgFaceDuration * fps/1000;
-	//console.log('imgFaceDurationFrames', imgFaceDurationFrames);
+		//console.log('durationQualtrics', durationQualtrics);
+		//console.log('imgFaceDuration', imgFaceDuration);
+		//console.log('fps:', fps);
+		//console.log("explanation:", explanation);
+		//console.log("instance:", instance);
+		imgFaceDurationFrames = imgFaceDuration * fps/1000;
+		//console.log('imgFaceDurationFrames', imgFaceDurationFrames);
 
-	imgFaceDurationFrames = imgFaceDurationFrames.toFixed(0);
-  txtDuration.value = imgFaceDuration.toFixed(1);
-	txtFrames.value = imgFaceDurationFrames;
-    
-	// imgCanvas.style.display = 'inline';
-	canvas.style.display = 'inline';
-  // questionEmotion.style.display = 'none';
-    
-	canvas.width = len;
-	canvas.height = len;
-	canvasBuffers.forEach(canvas => {
+		imgFaceDurationFrames = imgFaceDurationFrames.toFixed(0);
+	  txtDuration.value = imgFaceDuration.toFixed(1);
+		txtFrames.value = imgFaceDurationFrames;
+	    
+		// imgCanvas.style.display = 'inline';
+		canvas.style.display = 'inline';
+	  // questionEmotion.style.display = 'none';
+	    
 		canvas.width = len;
 		canvas.height = len;
-	});
+		canvasBuffers.forEach(canvas => {
+			canvas.width = len;
+			canvas.height = len;
+		});
 
-	function drawImgFocus(canvas) {
-  	w = crossLen;
-    h = crossLen
-		const ctx = canvas.getContext('2d');
+		function drawImgFocus(canvas) {
+	  	w = crossLen;
+	    h = crossLen
+			const ctx = canvas.getContext('2d');
+			
+			// Draw horizontal line (cross)
+			ctx.beginPath();
+			ctx.moveTo(canvas.width/2 - w/2, canvas.height/2);
+			ctx.lineTo(canvas.width/2 + w/2, canvas.height/2);
+			ctx.strokeStyle = 'black';
+			ctx.stroke();
+
+			// Draw vertical line (cross)
+			ctx.beginPath();
+			ctx.moveTo(canvas.width/2, canvas.height/2 - h/2);
+			ctx.lineTo(canvas.width/2, canvas.height/2 + h/2);
+			ctx.stroke();
+		}
+		//drawImgFocus();
+
+		function drawImgDistractor(canvas) {
+			const ctx = canvas.getContext('2d');
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+			// Draw random black lines
+			for (let i = 0; i < 50; i++) {
+			  const x1 = Math.random() * len;
+			  const y1 = Math.random() * len;
+			  const x2 = Math.random() * len;
+			  const y2 = Math.random() * len;
+
+			  ctx.beginPath();
+			  ctx.moveTo(x1, y1);
+			  ctx.lineTo(x2, y2);
+			  ctx.strokeStyle = 'black';
+			  ctx.stroke();
+			}
+		}
+		//drawImgDistractor();
+
+		function drawImgFace(canvas) {
+			const ctx = canvas.getContext('2d');
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			// var newImgFace = new Image();
+			// newImgFace.src = imgFaceUrl;
+	    // newImgFace.onload = function() {
+			// 	ctx.drawImage(newImgFace, 0, 0, canvas.width, canvas.height);
+			// };
+			// console.log('imgFace.src:', imgFace.src);
+			ctx.drawImage(imgFace, 0, 0, canvas.width, canvas.height);	
+		}
+		//drawImgFace();
+
+		// function drawImgFaceGrey(canvas) {
+		// 	const ctx = canvas.getContext('2d');
+		// 	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	  //   ctx.filter = "grayscale()";
+	  //   ctx.drawImage(imgFace, 0, 0, canvas.width, canvas.height);
+		// }
 		
-		// Draw horizontal line (cross)
-		ctx.beginPath();
-		ctx.moveTo(canvas.width/2 - w/2, canvas.height/2);
-		ctx.lineTo(canvas.width/2 + w/2, canvas.height/2);
-		ctx.strokeStyle = 'black';
-		ctx.stroke();
+		// draw first and cache	
+		drawImgFocus(canvasBuffers[0]);
+		drawImgDistractor(canvasBuffers[1]);
+		drawImgFace(canvasBuffers[2]);
+		// drawImgFaceGrey(canvasBuffers[2]);
+		drawImgDistractor(canvasBuffers[3]);
+		
 
-		// Draw vertical line (cross)
-		ctx.beginPath();
-		ctx.moveTo(canvas.width/2, canvas.height/2 - h/2);
-		ctx.lineTo(canvas.width/2, canvas.height/2 + h/2);
-		ctx.stroke();
+		const durationFrames = [
+			(1 * fps).toFixed(0), // 1.0s,
+			(6/60 * fps).toFixed(0), // 6 frames @60Hz, 100ms; cannot do 5 frames since some monitors are 30Hz
+			imgFaceDurationFrames,
+			(6/60 * fps).toFixed(0), // 6 frames @60Hz, 100ms
+		];
+		//console.log(durationFrames);
+		
+		let step = -1;	
+		let frames = 0;
+		function rafImgFocus(timestamp) {
+			if (step == -1) {
+				ctx.clearRect(0, 0, canvas.width, canvas.height);
+				ctx.drawImage(canvasBuffers[step + 1], 0,0);	
+				frames = 0;
+				step++;
+			}
+			if (++frames < durationFrames[step]) { window.requestAnimationFrame(rafImgFocus); }
+			else { window.requestAnimationFrame(rafImgDistractor); }		
+		}
+		function rafImgDistractor(timestamp) {
+			if (step == 0) {
+				ctx.clearRect(0, 0, canvas.width, canvas.height);
+				ctx.drawImage(canvasBuffers[step + 1], 0,0);
+				frames = 0;
+				step++;
+			}
+			if (++frames < durationFrames[step]) { window.requestAnimationFrame(rafImgDistractor); }
+			else { requestAnimationFrame(rafImgFace); }	
+		}
+		function rafImgFace(timestamp) {
+			if (step == 1) {
+				ctx.clearRect(0, 0, canvas.width, canvas.height);
+				ctx.drawImage(canvasBuffers[step + 1], 0,0);
+				frames = 0;
+				step++;
+			}
+			if (++frames < durationFrames[step]) { window.requestAnimationFrame(rafImgFace); }
+			else { window.requestAnimationFrame(rafImgDistractor2); }
+		}
+		function rafImgDistractor2(timestamp) {
+			if (step == 2) {
+				ctx.clearRect(0, 0, canvas.width, canvas.height);
+				ctx.drawImage(canvasBuffers[step + 1], 0,0);
+				frames = 0;
+				step++;
+			}
+			if (++frames <= durationFrames[step]) { 
+				window.requestAnimationFrame(rafImgDistractor2); 
+			}
+			else { 
+	    	imgCanvas.style.display = 'none'; // aggressively stops 1 frame early, so use <= for condition in if
+	    	// questionEmotion.style.display = 'block';
+	    	window.parent.postMessage("image_displayed:" + imgFaceDuration, '*');
+			}
+		}	
+		window.requestAnimationFrame(rafImgFocus);
+		
+		/*
+		 * Profiler: use Chrome performance profiler for screenshot timings, not video recording
+		 */
 	}
-	//drawImgFocus();
-
-	function drawImgDistractor(canvas) {
-		const ctx = canvas.getContext('2d');
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-		// Draw random black lines
-		for (let i = 0; i < 50; i++) {
-		  const x1 = Math.random() * len;
-		  const y1 = Math.random() * len;
-		  const x2 = Math.random() * len;
-		  const y2 = Math.random() * len;
-
-		  ctx.beginPath();
-		  ctx.moveTo(x1, y1);
-		  ctx.lineTo(x2, y2);
-		  ctx.strokeStyle = 'black';
-		  ctx.stroke();
-		}
-	}
-	//drawImgDistractor();
-
-	function drawImgFace(canvas) {
-		const ctx = canvas.getContext('2d');
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
-		// var newImgFace = new Image();
-		// newImgFace.src = imgFaceUrl;
-    // newImgFace.onload = function() {
-		// 	ctx.drawImage(newImgFace, 0, 0, canvas.width, canvas.height);
-		// };
-		// console.log('imgFace.src:', imgFace.src);
-		ctx.drawImage(imgFace, 0, 0, canvas.width, canvas.height);	
-	}
-	//drawImgFace();
-
-	// function drawImgFaceGrey(canvas) {
-	// 	const ctx = canvas.getContext('2d');
-	// 	ctx.clearRect(0, 0, canvas.width, canvas.height);
-  //   ctx.filter = "grayscale()";
-  //   ctx.drawImage(imgFace, 0, 0, canvas.width, canvas.height);
-	// }
-	
-	// draw first and cache	
-	drawImgFocus(canvasBuffers[0]);
-	drawImgDistractor(canvasBuffers[1]);
-	drawImgFace(canvasBuffers[2]);
-	// drawImgFaceGrey(canvasBuffers[2]);
-	drawImgDistractor(canvasBuffers[3]);
-	
-
-	const durationFrames = [
-		(1 * fps).toFixed(0), // 1.0s,
-		(6/60 * fps).toFixed(0), // 6 frames @60Hz, 100ms; cannot do 5 frames since some monitors are 30Hz
-		imgFaceDurationFrames,
-		(6/60 * fps).toFixed(0), // 6 frames @60Hz, 100ms
-	];
-	//console.log(durationFrames);
-	
-	let step = -1;	
-	let frames = 0;
-	function rafImgFocus(timestamp) {
-		if (step == -1) {
-			ctx.clearRect(0, 0, canvas.width, canvas.height);
-			ctx.drawImage(canvasBuffers[step + 1], 0,0);	
-			frames = 0;
-			step++;
-		}
-		if (++frames < durationFrames[step]) { window.requestAnimationFrame(rafImgFocus); }
-		else { window.requestAnimationFrame(rafImgDistractor); }		
-	}
-	function rafImgDistractor(timestamp) {
-		if (step == 0) {
-			ctx.clearRect(0, 0, canvas.width, canvas.height);
-			ctx.drawImage(canvasBuffers[step + 1], 0,0);
-			frames = 0;
-			step++;
-		}
-		if (++frames < durationFrames[step]) { window.requestAnimationFrame(rafImgDistractor); }
-		else { requestAnimationFrame(rafImgFace); }	
-	}
-	function rafImgFace(timestamp) {
-		if (step == 1) {
-			ctx.clearRect(0, 0, canvas.width, canvas.height);
-			ctx.drawImage(canvasBuffers[step + 1], 0,0);
-			frames = 0;
-			step++;
-		}
-		if (++frames < durationFrames[step]) { window.requestAnimationFrame(rafImgFace); }
-		else { window.requestAnimationFrame(rafImgDistractor2); }
-	}
-	function rafImgDistractor2(timestamp) {
-		if (step == 2) {
-			ctx.clearRect(0, 0, canvas.width, canvas.height);
-			ctx.drawImage(canvasBuffers[step + 1], 0,0);
-			frames = 0;
-			step++;
-		}
-		if (++frames <= durationFrames[step]) { 
-			window.requestAnimationFrame(rafImgDistractor2); 
-		}
-		else { 
-    	imgCanvas.style.display = 'none'; // aggressively stops 1 frame early, so use <= for condition in if
-    	// questionEmotion.style.display = 'block';
-    	window.parent.postMessage("image_displayed:" + imgFaceDuration, '*');
-		}
-	}	
-	window.requestAnimationFrame(rafImgFocus);
-	
-	/*
-	 * Profiler: use Chrome performance profiler for screenshot timings, not video recording
-	 */
-}
+});
 
 </script>
 
