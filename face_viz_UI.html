@@ -98,13 +98,19 @@ function getQueryParam(name) {
 // let faceFile = getQueryParam('variable').split('/');
 var explanation = getQueryParam('explanation');
 var instance = getQueryParam('instance');
+if (explanation === null) {
+    console.log('The explanation is null.');
+}
+if (instance === null) {
+    console.log('The instance is null.');
+}
 var durationQualtrics = parseFloat(getQueryParam('duration'));
 var fps = getQueryParam('fps');
 // var fps = 60;
 
 // pre-load image
-// const imgFace = document.createElement('img');
-var imgFace = new Image();
+const imgFace = document.createElement('img');
+// var imgFace = new Image();
 var imgFaceUrl = 'https://raw.githubusercontent.com/wencanz/FaceSketchv3/main/' + explanation + '/' + instance;
 // let imgFaceUrl = 'https://img.freepik.com/premium-vector/one-line-drawing-asian-grumpy-face-view-emotion-people-man-art-drawing-line_255544-1971.jpg?w=500';
 // let imgFaceUrl = 'https://raw.githubusercontent.com//wencanz/FaceSketch/main/photo/F001_T1_2561_face.jpg';
@@ -206,7 +212,7 @@ function runImgSequence(imgFaceDuration) {
     // newImgFace.onload = function() {
 		// 	ctx.drawImage(newImgFace, 0, 0, canvas.width, canvas.height);
 		// };
-		console.log('imgFace.src:', imgFace.src);
+		// console.log('imgFace.src:', imgFace.src);
 		ctx.drawImage(imgFace, 0, 0, canvas.width, canvas.height);	
 	}
 	//drawImgFace();
