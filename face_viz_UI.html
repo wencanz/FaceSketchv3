@@ -209,6 +209,7 @@ function runImgSequence(imgFaceDuration) {
 		if (typeof imgFace?.src === 'undefined') {
 			imgFace.src = imgFaceUrl;
     }
+    console.log('imgFace.src:', imgFace.src);
 		imgFace.onload = function() {
 			ctx.drawImage(imgFace, 0, 0, canvas.width, canvas.height);
 		};
